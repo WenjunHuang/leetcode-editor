@@ -29,8 +29,7 @@ public class URLUtils {
     private static String leetcodeCardInfo = "/problems/api/card-info/";
     private static String leetcodeRandomOneQuestion = "/problems/random-one-question/all";
 
-    public static String getLeetcodeHost() {
-        Config config = PersistentConfig.getInstance().getInitConfig();
+    public static String getLeetcodeHost(Config config) {
         if (config == null) {
             return leetcode;
         }
@@ -41,8 +40,8 @@ public class URLUtils {
         return host;
     }
 
-    public static boolean equalsHost(String host) {
-        String thisHost = getLeetcodeHost();
+    public static boolean equalsHost(String host,Config config) {
+        String thisHost = getLeetcodeHost(config);
         if(thisHost.equals(host)){
             return true;
         }else if(thisHost.equals(leetcodecn) && leetcodecnOld.equals(host)){
@@ -52,16 +51,16 @@ public class URLUtils {
         }
     }
 
-    public static String getLeetcodeUrl() {
+    public static String getLeetcodeUrl(Config config) {
         return leetcodeUrl + getLeetcodeHost();
     }
 
-    public static String getLeetcodeLogin() {
-        return getLeetcodeUrl() + leetcodeLogin;
+    public static String getLeetcodeLogin(Config config) {
+        return getLeetcodeUrl(config) + leetcodeLogin;
     }
 
-    public static String getLeetcodeLogout() {
-        return getLeetcodeUrl() + leetcodeLogout;
+    public static String getLeetcodeLogout(Config config) {
+        return getLeetcodeUrl(config) + leetcodeLogout;
     }
 
     public static String getLeetcodeAll() {

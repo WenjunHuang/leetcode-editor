@@ -4,6 +4,7 @@ import com.intellij.credentialStore.CredentialAttributes;
 import com.intellij.credentialStore.Credentials;
 import com.intellij.ide.passwordSafe.PasswordSafe;
 import com.intellij.openapi.components.*;
+import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.shuzijun.leetcode.plugin.model.Config;
 import com.shuzijun.leetcode.plugin.model.Constant;
@@ -33,8 +34,9 @@ public class PersistentConfig implements PersistentStateComponent<PersistentConf
     private Map<String, Config> initConfig = new HashMap<>();
 
 
-    public static PersistentConfig getInstance() {
-        return ServiceManager.getService(PersistentConfig.class);
+    public static PersistentConfig getInstance(Project project) {
+        return project.getService(PersistentConfig.class);
+//        return ServiceManager.getService(PersistentConfig.class);
     }
 
     @Nullable

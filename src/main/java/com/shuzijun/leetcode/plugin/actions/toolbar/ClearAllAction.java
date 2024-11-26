@@ -33,7 +33,7 @@ public class ClearAllAction extends AbstractAction implements DumbAware {
             dialog.setTitle("Clear All");
 
             if (dialog.showAndGet()) {
-                String filePath = PersistentConfig.getInstance().getTempFilePath();
+                String filePath = PersistentConfig.getInstance(anActionEvent.getProject()).getTempFilePath();
 
                 File file = new File(filePath);
                 if (!file.exists() || !file.isDirectory()) {

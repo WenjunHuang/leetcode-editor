@@ -26,7 +26,7 @@ public class QuestionEditorIconProvider implements FileIconPatcher {
             return baseIcon;
         }
         try {
-            Config config = PersistentConfig.getInstance().getInitConfig();
+            Config config = PersistentConfig.getInstance(project).getInitConfig();
             if (config == null || !config.isShowQuestionEditor() || !config.isShowQuestionEditorSign()) {
                 return baseIcon;
             }

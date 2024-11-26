@@ -58,7 +58,7 @@ public abstract class SplitTextEditorProvider implements AsyncFileEditorProvider
         return new Builder() {
             @Override
             public FileEditor build() {
-                return createSplitEditor(firstBuilder.build(), secondBuilder.build());
+                return createSplitEditor(project, firstBuilder.build(), secondBuilder.build());
             }
         };
     }
@@ -113,7 +113,7 @@ public abstract class SplitTextEditorProvider implements AsyncFileEditorProvider
         }
     }
 
-    protected abstract FileEditor createSplitEditor(@NotNull FileEditor firstEditor, @NotNull FileEditor secondEditor);
+    protected abstract FileEditor createSplitEditor(@NotNull Project project, @NotNull FileEditor firstEditor, @NotNull FileEditor secondEditor);
 
     @NotNull
     @Override
@@ -125,12 +125,12 @@ public abstract class SplitTextEditorProvider implements AsyncFileEditorProvider
     public static Builder getBuilderFromEditorProvider(@NotNull final FileEditorProvider provider,
                                                        @NotNull final Project project,
                                                        @NotNull final VirtualFile file) {
-            return new Builder() {
-                @Override
-                public FileEditor build() {
-                    return provider.createEditor(project, file);
-                }
-            };
+        return new Builder() {
+            @Override
+            public FileEditor build() {
+                return provider.createEditor(project, file);
+            }
+        };
 
     }
 }

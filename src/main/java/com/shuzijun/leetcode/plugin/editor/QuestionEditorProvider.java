@@ -32,7 +32,7 @@ public class QuestionEditorProvider extends SplitTextEditorProvider {
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
         try {
-            Config config = PersistentConfig.getInstance().getInitConfig();
+            Config config = PersistentConfig.getInstance(project).getInitConfig();
             if (config == null || !config.isShowQuestionEditor()) {
                 return false;
             }
@@ -58,15 +58,15 @@ public class QuestionEditorProvider extends SplitTextEditorProvider {
         final Builder secondBuilder = getBuilderFromEditorProvider(this.mySecondProvider, project, file);
         return new Builder() {
             public FileEditor build() {
-                return createSplitEditor(firstBuilder.build(), secondBuilder.build());
+                return createSplitEditor(project, firstBuilder.build(), secondBuilder.build());
             }
         };
     }
 
     @Override
-    protected FileEditor createSplitEditor(@NotNull FileEditor firstEditor, @NotNull FileEditor secondEditor) {
+    protected FileEditor createSplitEditor(@NotNull Project project, @NotNull FileEditor firstEditor, @NotNull FileEditor secondEditor) {
 
-        if (PersistentConfig.getInstance().getInitConfig().isLeftQuestionEditor()) {
+        if (PersistentConfig.getInstance(project).getInitConfig().isLeftQuestionEditor()) {
             return new QuestionEditorWithPreview((TextEditor) secondEditor, firstEditor);
         } else {
             return new QuestionEditorWithPreview((TextEditor) firstEditor, secondEditor);

@@ -15,7 +15,7 @@ import com.shuzijun.leetcode.plugin.setting.PersistentConfig
 class RegisterPluginInstallerStateListener : StartupActivity {
     override fun runActivity(project: Project) {
         val newVersion = getPlugin(PluginId.getId(PluginConstant.PLUGIN_ID))!!.version
-        val config = PersistentConfig.getInstance().initConfig
+        val config = PersistentConfig.getInstance(project).initConfig
         val oldVersion: String?
         if (config == null) {
             oldVersion = PropertiesComponent.getInstance()

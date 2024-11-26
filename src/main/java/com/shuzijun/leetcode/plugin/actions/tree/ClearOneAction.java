@@ -29,7 +29,7 @@ public class ClearOneAction extends AbstractTreeAction {
             return;
         }
 
-        String filePath = PersistentConfig.getInstance().getTempFilePath() + VelocityUtils.convert(config.getCustomFileName(), question) + codeTypeEnum.getSuffix();
+        String filePath = PersistentConfig.getInstance(anActionEvent.getProject()).getTempFilePath() + VelocityUtils.convert(config.getCustomFileName(), question) + codeTypeEnum.getSuffix();
 
         File file = new File(filePath);
         if (file.exists()) {

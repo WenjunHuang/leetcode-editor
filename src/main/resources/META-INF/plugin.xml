@@ -28,7 +28,9 @@
                     factoryClass="com.shuzijun.leetcode.plugin.window.WindowFactory" />
         <toolWindow id="Leetcode Console" secondary="false" icon="LeetCodeEditorIcons.LEETCODE_TOOL_WINDOW" anchor="bottom"
                     factoryClass="com.shuzijun.leetcode.plugin.window.ConsoleWindowFactory" />
-        <applicationService serviceInterface="com.shuzijun.leetcode.plugin.setting.PersistentConfig"
+<!--        <applicationService serviceInterface="com.shuzijun.leetcode.plugin.setting.PersistentConfig"-->
+<!--                            serviceImplementation="com.shuzijun.leetcode.plugin.setting.PersistentConfig"/>-->
+        <projectService serviceInterface="com.shuzijun.leetcode.plugin.setting.PersistentConfig"
                             serviceImplementation="com.shuzijun.leetcode.plugin.setting.PersistentConfig"/>
         <projectService serviceInterface="com.shuzijun.leetcode.plugin.setting.ProjectConfig"
                         serviceImplementation="com.shuzijun.leetcode.plugin.setting.ProjectConfig"/>

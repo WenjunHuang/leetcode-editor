@@ -61,7 +61,7 @@ public class LoginAction extends AbstractAction implements DumbAware {
                 return;
             } else {
                 config.addCookie(config.getUrl() + config.getLoginName(), null);
-                PersistentConfig.getInstance().setInitConfig(config);
+                PersistentConfig.getInstance(anActionEvent.getProject()).setInitConfig(config);
             }
         }
 

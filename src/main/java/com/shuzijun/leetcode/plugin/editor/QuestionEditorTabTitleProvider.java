@@ -22,7 +22,7 @@ public class QuestionEditorTabTitleProvider implements EditorTabTitleProvider {
     @Override
     public @NlsContexts.TabTitle @Nullable String getEditorTabTitle(@NotNull Project project, @NotNull VirtualFile file) {
         try {
-            Config config = PersistentConfig.getInstance().getInitConfig();
+            Config config = PersistentConfig.getInstance(project).getInitConfig();
             if (config == null || !config.isShowQuestionEditor() || !config.isShowQuestionEditorSign()) {
                 return null;
             }

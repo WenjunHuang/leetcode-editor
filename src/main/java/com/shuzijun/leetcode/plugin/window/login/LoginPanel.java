@@ -14,6 +14,7 @@ import com.intellij.ui.jcef.JCEFHtmlPanel;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.components.BorderLayoutPanel;
 import com.shuzijun.leetcode.plugin.model.PluginConstant;
+import com.shuzijun.leetcode.plugin.setting.PersistentConfig;
 import com.shuzijun.leetcode.plugin.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.cef.browser.CefBrowser;
@@ -215,7 +216,7 @@ public class LoginPanel extends DialogWrapper {
                     });
                 }
             }, getCefBrowser());
-            loadURL(URLUtils.getLeetcodeLogin());
+            loadURL(URLUtils.getLeetcodeLogin(PersistentConfig.getInstance(project).getConfig()));
         }
 
         @Override

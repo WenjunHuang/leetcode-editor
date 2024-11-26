@@ -37,7 +37,7 @@ public class HttpLogin {
             return Boolean.FALSE;
         }
 
-        if (StringUtils.isBlank(PersistentConfig.getInstance().getPassword(config.getLoginName()))) {
+        if (StringUtils.isBlank(PersistentConfig.getInstance(project).getPassword(config.getLoginName()))) {
             return Boolean.FALSE;
         }
 
@@ -45,10 +45,10 @@ public class HttpLogin {
             HttpEntity ent = MultipartEntityBuilder.create()
                     .addTextBody("csrfmiddlewaretoken", HttpRequestUtils.getToken() == null ? "" : HttpRequestUtils.getToken())
                     .addTextBody("login", config.getLoginName())
-                    .addTextBody("password", PersistentConfig.getInstance().getPassword(config.getLoginName()))
+                    .addTextBody("password", PersistentConfig.getInstance(project).getPassword(config.getLoginName()))
                     .addTextBody("next", "/problems")
                     .build();
-            HttpResponse response = HttpRequest.builderPost(URLUtils.getLeetcodeLogin(), ent.getContentType().getValue())
+            HttpResponse response = HttpRequest.builderPost(URLUtils.getLeetcodeLogin(config), ent.getContentType().getValue())
                     .body(IOUtils.toString(ent.getContent(), "UTF-8"))
                     .addHeader("x-requested-with", "XMLHttpRequest")
                     .addHeader("accept", "*/*").request();
@@ -124,9 +124,9 @@ public class HttpLogin {
         ProgressManager.getInstance().run(new Task.Backgroundable(project, PluginConstant.ACTION_PREFIX + ".loginSuccess", false) {
             @Override
             public void run(@NotNull ProgressIndicator progressIndicator) {
-                Config config = PersistentConfig.getInstance().getInitConfig();
+                Config config = PersistentConfig.getInstance(project).getInitConfig();
                 config.addCookie(config.getUrl() + config.getLoginName(), CookieUtils.httpCookieToJSONString(cookieList));
-                PersistentConfig.getInstance().setInitConfig(config);
+                PersistentConfig.getInstance(project).setInitConfig(config);
                 MessageUtils.getInstance(project).showInfoMsg("info", PropertiesUtils.getInfo("login.success"));
                 NavigatorTabsPanel.loadUser(true);
                 ApplicationManager.getApplication().getMessageBus().syncPublisher(LoginNotifier.TOPIC).login(project, config.getUrl());
@@ -136,8 +136,9 @@ public class HttpLogin {
     }
 
     public static boolean isEnabledJcef() {
-        Config config = PersistentConfig.getInstance().getInitConfig();
-        return config != null && !config.isCookie() && isSupportedJcef();
+        return isSupportedJcef();
+//        Config config = PersistentConfig.getInstance(project).getInitConfig();
+//        return config != null && !config.isCookie() && isSupportedJcef();
     }
 
     public static boolean isSupportedJcef() {

@@ -23,14 +23,14 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
-        Config config = PersistentConfig.getInstance().getInitConfig();
+        Config config = PersistentConfig.getInstance(anActionEvent.getProject()).getInitConfig();
         if (config == null) {
             MessageUtils.getInstance(anActionEvent.getProject()).showWarnMsg("warning", PropertiesUtils.getInfo("config.first"));
             ShowSettingsUtil.getInstance().showSettingsDialog(anActionEvent.getProject(), PluginConstant.APPLICATION_CONFIGURABLE_DISPLAY_NAME);
             return;
         } else if (StringUtils.isBlank(config.getId())) {
             config.setId(MTAUtils.getI(""));
-            PersistentConfig.getInstance().setInitConfig(config);
+            PersistentConfig.getInstance(anActionEvent.getProject()).setInitConfig(config);
         }
 
         try {

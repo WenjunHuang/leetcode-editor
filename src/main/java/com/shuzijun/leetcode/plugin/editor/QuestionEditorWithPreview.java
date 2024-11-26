@@ -10,6 +10,7 @@ import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.TextEditor;
 import com.intellij.openapi.fileEditor.TextEditorWithPreview;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.shuzijun.leetcode.plugin.model.PluginConstant;
 import com.shuzijun.leetcode.plugin.setting.PersistentConfig;
@@ -30,7 +31,11 @@ public class QuestionEditorWithPreview extends TextEditorWithPreview {
 
     @Nullable
     protected ActionGroup createLeftToolbarActionGroup() {
-        if (!PersistentConfig.getInstance().getInitConfig().isLeftQuestionEditor()) {
+        Project project = getEditor().getProject();
+        if (project == null) {
+            return null;
+        }
+        if (!PersistentConfig.getInstance(project).getInitConfig().isLeftQuestionEditor()) {
             return (ActionGroup) ActionManager.getInstance().getAction(PluginConstant.LEETCODE_EDITOR_GROUP);
         } else {
             return null;
@@ -40,7 +45,11 @@ public class QuestionEditorWithPreview extends TextEditorWithPreview {
 
     @Nullable
     protected ActionGroup createRightToolbarActionGroup() {
-        if (PersistentConfig.getInstance().getInitConfig().isLeftQuestionEditor()) {
+        Project project = getEditor().getProject();
+        if (project == null) {
+            return null;
+        }
+        if (PersistentConfig.getInstance(project).getInitConfig().isLeftQuestionEditor()) {
             return (ActionGroup) ActionManager.getInstance().getAction(PluginConstant.LEETCODE_EDITOR_GROUP);
         } else {
             return null;
@@ -49,7 +58,8 @@ public class QuestionEditorWithPreview extends TextEditorWithPreview {
 
     @NotNull
     protected ActionGroup createViewActionGroup() {
-        if (PersistentConfig.getInstance().getInitConfig().isLeftQuestionEditor()) {
+        Project project = getEditor().getProject();
+        if (PersistentConfig.getInstance(project).getInitConfig().isLeftQuestionEditor()) {
             return new DefaultActionGroup(
                     getShowEditorAndPreviewAction(),
                     getShowPreviewAction()
@@ -85,7 +95,7 @@ public class QuestionEditorWithPreview extends TextEditorWithPreview {
 
     @NotNull
     public TextEditor getTextEditor() {
-        if (PersistentConfig.getInstance().getInitConfig().isLeftQuestionEditor()) {
+        if (PersistentConfig.getInstance(getEditor().getProject()).getInitConfig().isLeftQuestionEditor()) {
             if (((TextEditor) myPreview).getEditor() == null) {
                 return myEditor;
             }
